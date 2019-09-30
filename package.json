@@ -1,0 +1,19 @@
+{
+  "name": "sudoku-solver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^6.5.0",
+    "eslint-config-google": "^0.14.0",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
+    "sudoku": "0.0.2"
+  }
+}
