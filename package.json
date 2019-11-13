@@ -9,11 +9,5 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "eslint": "^6.5.0",
-    "eslint-config-google": "^0.14.0",
-    "react": "^16.10.1",
-    "react-dom": "^16.10.1",
-    "sudoku": "0.0.2"
-  }
+  "dependencies": {}
 }
