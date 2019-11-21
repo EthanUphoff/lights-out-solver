@@ -26,23 +26,23 @@ solve = () => {
   for (i = 0; i < lightout.length; i ++) {
     for (j = 0; j < lightout[i].length; j++) {
         posToCareAbout = insertIntoPosArr(posToCareAbout, [[i, j], generateVal(i, j)])
-        posToCareAbout.forEach(pos => {
+        for(let x = 0; x < posToCareAbout.length; x++) {
           //console.log(clicked)
           //console.log([pos[0][0],pos[0][1]])
           //console.log(!clicked.includes([pos[0][0], pos[0][1]]))
           //console.log([[0,0]].includes([0,0]))
           let include = true
           clicked.forEach(click => {
-            if(click[0] == pos[0][0] && click[1] == pos[0][1]){
+            if(click[0] == posToCareAbout[x][0][0] && click[1] == posToCareAbout[x][0][1]){
               include = false
             }
           })
           if (include) {
-            switching(pos[0][0], pos[0][1])
+            switching(posToCareAbout[x][0][0], posToCareAbout[x][0][1])
             console.log(lightout)
+            break
           }
         }
-        )
     }
   }
   if(!validate(lightout)){
