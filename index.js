@@ -2,6 +2,7 @@
 // const lightout = [[false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false]]
 const lightout = [[false, true, false, true, false], [false, true, false, true, true], [true, false, true, false, true], [true, false, false, true, false], [false, true, true, false, true]]
 const posarr = [[0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0]]
+let clicked = []
 
 validate = (l) => {
   let i = 0;
@@ -25,8 +26,23 @@ solve = () => {
   for (i = 0; i < lightout.length; i ++) {
     for (j = 0; j < lightout[i].length; j++) {
         posToCareAbout = insertIntoPosArr(posToCareAbout, [[i, j], generateVal(i, j)])
-        switching(posToCareAbout[0][0][0], posToCareAbout[0][0][1])
-        console.log(lightout)
+        posToCareAbout.forEach(pos => {
+          //console.log(clicked)
+          //console.log([pos[0][0],pos[0][1]])
+          //console.log(!clicked.includes([pos[0][0], pos[0][1]]))
+          //console.log([[0,0]].includes([0,0]))
+          let include = true
+          clicked.forEach(click => {
+            if(click[0] == pos[0][0] && click[1] == pos[0][1]){
+              include = false
+            }
+          })
+          if (include) {
+            switching(pos[0][0], pos[0][1])
+            console.log(lightout)
+          }
+        }
+        )
     }
   }
   if(!validate(lightout)){
@@ -39,7 +55,7 @@ solve = () => {
 insertIntoPosArr = (arr, pos) => {
   let returnArr = [];
   if (arr.length == 0) {
-    console.log("H")
+    //console.log("H")
     returnArr[0] = pos;
     return returnArr;
   }
@@ -73,6 +89,8 @@ switching = (i, j) => {
   lightout[i] && lightout[i][j-1]  ? lightout[i][j-1] = !lightout[i][j-1] : undefined
   lightout[i] && lightout[i][j+1] ? lightout[i][j+1] = !lightout[i][j+1] : undefined
   lightout[i][j] = !lightout[i][j]
+  clicked.push([i,j])
+  //console.log(clicked)
 }
 
 solve()
