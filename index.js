@@ -1,13 +1,14 @@
 // false = on
-// const lightout = [[false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false]]
-const lightout = [[false, true, false, true, false], [false, true, false, true, true], [true, false, true, false, true], [true, false, false, true, false], [false, true, true, false, true]]
+const helloWorld = [[false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false]]
+// const lightout = [[false, true, false, true, false], [false, true, false, true, true], [true, false, true, false, true], [true, false, false, true, false], [false, true, true, false, true]]
 const posarr = [[0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0]]
-let clicked = []
+//let clicked = []
+const solution = [];
 
 validate = (l) => {
   let i = 0;
   do {
-    if(l[i].includes(false)){
+    if(l[i].includes(true)){
       return false
     }
     i++
@@ -21,35 +22,47 @@ comparator = (x, y) => {
 
 }
 
-solve = () => {
+solve = (Parent) => {
+  console.log(Parent)
   let posToCareAbout = [];
-  for (i = 0; i < lightout.length; i ++) {
-    for (j = 0; j < lightout[i].length; j++) {
-        posToCareAbout = insertIntoPosArr(posToCareAbout, [[i, j], generateVal(i, j)])
-        for(let x = 0; x < posToCareAbout.length; x++) {
-          //console.log(clicked)
-          //console.log([pos[0][0],pos[0][1]])
-          //console.log(!clicked.includes([pos[0][0], pos[0][1]]))
-          //console.log([[0,0]].includes([0,0]))
-          let include = true
-          clicked.forEach(click => {
-            if(click[0] == posToCareAbout[x][0][0] && click[1] == posToCareAbout[x][0][1]){
-              include = false
-            }
-          })
-          if (include) {
-            switching(posToCareAbout[x][0][0], posToCareAbout[x][0][1])
-            console.log(lightout)
-            break
-          }
-        }
+  for (let i = 0; i < Parent[1].length; i++) {
+    for (let j = 0; j < Parent[1][i].length; j++) {
+      posToCareAbout = insertIntoPosArr(posToCareAbout, generateVal(i, j, Parent[1]))
     }
   }
-  if(!validate(lightout)){
-    solve()
-  } else {
-    console.log(lightout)
+  let children = genChildren(posToCareAbout, Parent)
+  for (let i = 0; i < children.length; i++) {
+    solution.push(children[i]);
+    console.log(children[i])
+    if (validate(children[i][1]) || solve(children[i])) {
+      return true;
+    } else {
+      solution.pop()
+    }
   }
+  return false;
+}
+
+genChildren = (switchArr, Parent) => {
+  let children = [];
+  for (let i = 0; i < switchArr.length; i++) {
+    let valid = true
+    for (let j = 0; j < Parent[2].length; j++) {
+      for (let k = 0; k < Parent[2][j].length; k++) {
+        if (switchArr[i][0] == Parent[2][j] && switchArr[i][1] == Parent[2][j][k]) {
+          valid = false;
+          break;
+        }
+      }
+      if (!valid) {
+        break;
+      }
+    }
+    if (valid) {
+      children.push(switchArr[i]);
+    }
+  }
+  return children
 }
 
 insertIntoPosArr = (arr, pos) => {
@@ -74,8 +87,9 @@ insertIntoPosArr = (arr, pos) => {
   return returnArr
 }
 
-generateVal = (i, j) => {
+generateVal = (i, j, lightout) => {
   let val = 1;
+  lightout[i] && lightout[i][j] ? val++ : undefined
   lightout[i-1] && lightout[i-1][j] ? val++ : undefined
   lightout[i+1] && lightout[i+1][j] ? val++ : undefined
   lightout[i] && lightout[i][j-1] ? val++ : undefined
@@ -89,11 +103,11 @@ switching = (i, j) => {
   lightout[i] && lightout[i][j-1]  ? lightout[i][j-1] = !lightout[i][j-1] : undefined
   lightout[i] && lightout[i][j+1] ? lightout[i][j+1] = !lightout[i][j+1] : undefined
   lightout[i][j] = !lightout[i][j]
-  clicked.push([i,j])
+  //clicked.push([i,j])
   //console.log(clicked)
 }
 
-solve()
+solve([0, helloWorld, []])
 
 validate(lightout)
 //validate(truearr)
