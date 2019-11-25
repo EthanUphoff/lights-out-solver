@@ -1,7 +1,7 @@
 // True means a light is on.
-const lightOut = [[[true, true, true], [true, true, true], [true, true, true]], 0, []]
-const lightOut1 = [[[true, false, true], [false, true, true], [false, true, true]], 0, []]
-const lightOut2 = [[[true, false, false], [false, true, false], [false, true, false]], 0, []]
+const lightOut = [[[false, true, true, true], [false, true, true, false], [true, true, false, true], [false, false, false, false]], 0, []]
+const lightOut1 = [[[true, false, true, false], [true, false, true, true], [false, false, false, true], [true, false, false, false]], 0, []]
+//const lightOut2 = [[[true, false, false], [false, true, false], [false, true, false]], 0, []]
 
 
 solve = (parent, children) => {
@@ -45,8 +45,8 @@ validate = (parent) => {
 generateChildren = (parent) => {
     let newchildren = []
     //console.log(parent)
-    for (let i = 0; i < 3; i++){
-        for (let j = 0; j < 3; j++) {
+    for (let i = 0; i < 4; i++){
+        for (let j = 0; j < 4; j++) {
             let valid = true
             for(let k = 0; k < parent[2].length; k++){
                 if(parent[2][k][0] == i && parent[2][k][1] == j){
@@ -68,15 +68,16 @@ comparator = (i, j) => {
 }
 
 clickPos = (parent, pos) => {
-    let result = parent;
+    let result = JSON.parse(JSON.stringify(parent));
     parent[pos[0]] != undefined && parent[pos[0]][pos[1]] != undefined  ? result[pos[0]][pos[1]] = !parent[pos[0]][pos[1]] : undefined;
     parent[pos[0]-1] != undefined  && parent[pos[0]-1][pos[1]] != undefined  ? result[pos[0]-1][pos[1]] = !parent[pos[0]-1][pos[1]] : undefined;
     parent[pos[0]+1] != undefined  && parent[pos[0]+1][pos[1]] != undefined  ? result[pos[0]+1][pos[1]] = !parent[pos[0]+1][pos[1]] : undefined;
     parent[pos[0]] != undefined  && parent[pos[0]][pos[1]-1] != undefined  ? result[pos[0]][pos[1]-1] = !parent[pos[0]][pos[1]-1] : undefined;
     parent[pos[0]] != undefined  && parent[pos[0]][pos[1]+1] != undefined  ? result[pos[0]][pos[1]+1] = !parent[pos[0]][pos[1]+1] : undefined;
-    //console.log(pos)
+    //console.log("PARENT")
+    //console.log(parent)
+    //console.log("RESULT")
     //console.log(result)
-    //console.log(!parent[pos[0]][pos[1]])
     return result;
 }
 
@@ -92,4 +93,4 @@ countLightsOn = (child) => {
 
 solve(lightOut, [])
 solve(lightOut1, [])
-solve(lightOut2, [])
+//solve(lightOut2, [])
