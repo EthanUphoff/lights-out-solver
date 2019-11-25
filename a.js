@@ -10,10 +10,8 @@ solve = (parent, children) => {
         return
     }
     let child = children.concat(generateChildren(parent)).sort(comparator)
-    //console.log(child)
     const newparent = child.shift()
     solve(newparent, child)
-    //children = children.concat(generateChildren(parent, clicked)).sort((child1, child2) => countLightsOn(child1) - countLightsOn(child2));
 }
 
 validate = (parent) => {
@@ -25,26 +23,8 @@ validate = (parent) => {
     return true
 }
 
-/*generateChildren(parent) {
-    let children = [];
-    for (let i = 0; i < posToCareAbout.length; i++) {
-        let valid = true;
-        for (let j = 0; i < clicked.length; j++) {
-            if (posToCareAbout[i][0] == clicked[j][0] && posToCareAbout[i][1] == clicked[j][1]) {
-                valid = false;
-                break;
-            }
-        }
-        if (valid) {
-            children.push(clickPos(parent, posToCareAbout[i]));
-        }
-    }
-    return children;
-}*/
-
 generateChildren = (parent) => {
     let newchildren = []
-    //console.log(parent)
     for (let i = 0; i < 4; i++){
         for (let j = 0; j < 4; j++) {
             let valid = true
@@ -56,7 +36,6 @@ generateChildren = (parent) => {
             if (valid) {
                 const child = clickPos(parent[0], [i, j])
                 newchildren.push([child, parent[1] + countLightsOn(child), parent[2].concat([[i, j]])])
-                //console.log(newchildren[2])
             }
         }
     }
@@ -74,10 +53,6 @@ clickPos = (parent, pos) => {
     parent[pos[0]+1] != undefined  && parent[pos[0]+1][pos[1]] != undefined  ? result[pos[0]+1][pos[1]] = !parent[pos[0]+1][pos[1]] : undefined;
     parent[pos[0]] != undefined  && parent[pos[0]][pos[1]-1] != undefined  ? result[pos[0]][pos[1]-1] = !parent[pos[0]][pos[1]-1] : undefined;
     parent[pos[0]] != undefined  && parent[pos[0]][pos[1]+1] != undefined  ? result[pos[0]][pos[1]+1] = !parent[pos[0]][pos[1]+1] : undefined;
-    //console.log("PARENT")
-    //console.log(parent)
-    //console.log("RESULT")
-    //console.log(result)
     return result;
 }
 
