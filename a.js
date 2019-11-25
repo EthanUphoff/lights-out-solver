@@ -2,8 +2,11 @@
 const lightOut = [[[false, true, true, true], [false, true, true, false], [true, true, false, true], [false, false, false, false]], 0, []]
 const lightOut1 = [[[true, false, true, false], [true, false, true, true], [false, false, false, true], [true, false, false, false]], 0, []]
 const lightOut2 = [[[true, false, true, true], [false, false, true, true], [false, true, true, false], [false, true, true, false]], 0, []]
+// All examples were taken from: http://perfectweb.org/ddo/solver/vale_puzzle.html to prove validity
+// We opted to use 4x4 instead of 5x5 because we were running out of memory with 5x5 examples due to it
+// having a potential 25! children (supposedly 24!+1 with a-star)
 
-
+// Recursively searches for the result
 solve = (parent, children) => {
     if(validate(parent)){
         console.log(parent)
@@ -14,6 +17,7 @@ solve = (parent, children) => {
     solve(newparent, child)
 }
 
+// Validates the answer
 validate = (parent) => {
     for(let i = 0; i < parent[0].length; i++){
         if(parent[0][i].includes(true)){
@@ -23,6 +27,7 @@ validate = (parent) => {
     return true
 }
 
+// Generates a child for every node not clicked so far
 generateChildren = (parent) => {
     let newchildren = []
     for (let i = 0; i < 4; i++){
@@ -42,10 +47,12 @@ generateChildren = (parent) => {
     return newchildren;
 }
 
+// Simple comparator for costs
 comparator = (i, j) => {
     return i[1] - j[1]
 }
 
+// Switches the lights on/off for a given child 
 clickPos = (parent, pos) => {
     let result = JSON.parse(JSON.stringify(parent));
     parent[pos[0]] != undefined && parent[pos[0]][pos[1]] != undefined  ? result[pos[0]][pos[1]] = !parent[pos[0]][pos[1]] : undefined;
@@ -56,6 +63,7 @@ clickPos = (parent, pos) => {
     return result;
 }
 
+// Counts the number of lights on in a child to determine the cost
 countLightsOn = (child) => {
     let lightsOn = 0;
     for (let i = 0; i < child.length; i++) {
@@ -66,6 +74,7 @@ countLightsOn = (child) => {
     return lightsOn;
 }
 
+// Tests
 solve(lightOut, [])
 solve(lightOut1, [])
 solve(lightOut2, [])
