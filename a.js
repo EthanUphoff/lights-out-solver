@@ -1,10 +1,28 @@
 // True means a light is on.
-const lightOut = [[[false, true, false, true, false], [false, true, false, true, true], [true, false, true, false, true], [true, false, false, true, false], [false, true, true, false, true]], 0, []]
+const lightOut = [[[true, true, true], [true, true, true], [true, true, true]], 0, []]
+const lightOut1 = [[[true, false, true], [false, true, true], [false, true, true]], 0, []]
+const lightOut2 = [[[true, false, false], [false, true, false], [false, true, false]], 0, []]
+
 
 solve = (parent, children) => {
+    if(validate(parent)){
+        console.log(parent)
+        return
+    }
     let child = children.concat(generateChildren(parent)).sort(comparator)
-    console.log(child)
+    //console.log(child)
+    const newparent = child.shift()
+    solve(newparent, child)
     //children = children.concat(generateChildren(parent, clicked)).sort((child1, child2) => countLightsOn(child1) - countLightsOn(child2));
+}
+
+validate = (parent) => {
+    for(let i = 0; i < parent[0].length; i++){
+        if(parent[0][i].includes(true)){
+            return false
+        }
+    }
+    return true
 }
 
 /*generateChildren(parent) {
@@ -26,9 +44,9 @@ solve = (parent, children) => {
 
 generateChildren = (parent) => {
     let newchildren = []
-    console.log(parent)
-    for (let i = 0; i < 5; i++){
-        for (let j = 0; j < 5; j++) {
+    //console.log(parent)
+    for (let i = 0; i < 3; i++){
+        for (let j = 0; j < 3; j++) {
             let valid = true
             for(let k = 0; k < parent[2].length; k++){
                 if(parent[2][k][0] == i && parent[2][k][1] == j){
@@ -37,7 +55,8 @@ generateChildren = (parent) => {
             }
             if (valid) {
                 const child = clickPos(parent[0], [i, j])
-                newchildren.push([child, parent[1] + countLightsOn(child), parent[2].concat([i, j]) ])
+                newchildren.push([child, parent[1] + countLightsOn(child), parent[2].concat([[i, j]])])
+                //console.log(newchildren[2])
             }
         }
     }
@@ -72,3 +91,5 @@ countLightsOn = (child) => {
 }
 
 solve(lightOut, [])
+solve(lightOut1, [])
+solve(lightOut2, [])
