@@ -1,7 +1,7 @@
 // True means a light is on.
 const lightOut = [[[false, true, true, true], [false, true, true, false], [true, true, false, true], [false, false, false, false]], 0, []]
 const lightOut1 = [[[true, false, true, false], [true, false, true, true], [false, false, false, true], [true, false, false, false]], 0, []]
-//const lightOut2 = [[[true, false, false], [false, true, false], [false, true, false]], 0, []]
+const lightOut2 = [[[true, false, true, true], [false, false, true, true], [false, true, true, false], [false, true, true, false]], 0, []]
 
 
 solve = (parent, children) => {
@@ -93,4 +93,4 @@ countLightsOn = (child) => {
 
 solve(lightOut, [])
 solve(lightOut1, [])
-//solve(lightOut2, [])
+solve(lightOut2, [])
