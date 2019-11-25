@@ -1,6 +1,6 @@
 // false = on
-const helloWorld = [[false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false]]
-// const lightout = [[false, true, false, true, false], [false, true, false, true, true], [true, false, true, false, true], [true, false, false, true, false], [false, true, true, false, true]]
+//const helloWorld = [[false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false], [false, false, false, false, false]]
+const helloWorld = [[false, true, false, true, false], [false, true, false, true, true], [true, false, true, false, true], [true, false, false, true, false], [false, true, true, false, true]]
 const posarr = [[0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0]]
 //let clicked = []
 const solution = [];
@@ -23,13 +23,14 @@ comparator = (x, y) => {
 }
 
 solve = (Parent) => {
-  console.log(Parent)
+  //console.log(Parent)
   let posToCareAbout = [];
   for (let i = 0; i < Parent[1].length; i++) {
     for (let j = 0; j < Parent[1][i].length; j++) {
-      posToCareAbout = insertIntoPosArr(posToCareAbout, generateVal(i, j, Parent[1]))
+      posToCareAbout = insertIntoPosArr(posToCareAbout, [[i, j], generateVal(i, j, Parent[1])])
     }
   }
+  console.log(posToCareAbout)
   let children = genChildren(posToCareAbout, Parent)
   for (let i = 0; i < children.length; i++) {
     solution.push(children[i]);
@@ -48,15 +49,19 @@ genChildren = (switchArr, Parent) => {
   for (let i = 0; i < switchArr.length; i++) {
     let valid = true
     for (let j = 0; j < Parent[2].length; j++) {
-      for (let k = 0; k < Parent[2][j].length; k++) {
+      /*for (let k = 0; k < Parent[2][j].length; k++) {
         if (switchArr[i][0] == Parent[2][j] && switchArr[i][1] == Parent[2][j][k]) {
           valid = false;
           break;
         }
+      }*/
+      if (switchArr[i][0] == Parent[2][j][0] && switchArr[i][1] == Parent[2][j][1]) {
+        valid = false;
+        //break;
       }
-      if (!valid) {
+      /*if (!valid) {
         break;
-      }
+      }*/
     }
     if (valid) {
       children.push(switchArr[i]);
@@ -97,7 +102,7 @@ generateVal = (i, j, lightout) => {
   return val
 }
 
-switching = (i, j) => {
+switching = (i, j, lightout) => {
   lightout[i-1] && lightout[i-1][j] ? lightout[i-1][j] = !lightout[i-1][j] : undefined
   lightout[i+1] && lightout[i+1][j] ? lightout[i+1][j] = !lightout[i+1][j] : undefined
   lightout[i] && lightout[i][j-1]  ? lightout[i][j-1] = !lightout[i][j-1] : undefined
